@@ -33,7 +33,7 @@ public class LibroService {
         return libroRepository.findById(id);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','BIBLIOTECARIO', 'ESTUDIANTE')")
+//    @PreAuthorize("hasAnyRole('ADMIN','BIBLIOTECARIO', 'ESTUDIANTE')")
     //Buscar por titulo
     public List<Libro> buscarLibroPorTitulo(String buscarLibro){
         if (buscarLibro == null || buscarLibro.isEmpty()){
@@ -43,7 +43,7 @@ public class LibroService {
         }
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','BIBLIOTECARIO')")
+//    @PreAuthorize("hasAnyRole('ADMIN','BIBLIOTECARIO')")
     //guardar libro
     public Libro guardarLibro(Libro libro) {
         libroRepository.save(libro);
@@ -51,7 +51,7 @@ public class LibroService {
     }
 
     //ACTUALIZAR PRODUCTO
-    @PreAuthorize("hasAnyRole('ADMIN','BIBLIOTECARIO')")
+//    @PreAuthorize("hasAnyRole('ADMIN','BIBLIOTECARIO')")
     public Libro actualizarLibro(Long id, Libro libro) {
         Libro libroExistente = buscarLibroById(id)
                 //manejo de escepciones
@@ -65,7 +65,7 @@ public class LibroService {
     }
 
     //ELIMINAR PRODUCTO
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     public void eliminarLibro(Long id){
         Libro libro = buscarLibroById(id)
                 .orElseThrow(()-> new ResponseStatusException(

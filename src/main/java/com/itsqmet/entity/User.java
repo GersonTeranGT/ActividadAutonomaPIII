@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "usuarios")
 public class User {
 
     @Id
@@ -23,6 +24,7 @@ public class User {
 
     @NotNull
     @Size(min = 5, max = 10)
+    @Column(unique = true)
     private String username;
 
     @NotNull

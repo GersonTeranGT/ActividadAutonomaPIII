@@ -26,7 +26,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/inicio", "/login", "/users/formUsuario", "/users/registrarUsuario").permitAll()
+                        .requestMatchers("/", "/inicio", "/login", "/users/formUsuario", "/users/registrarUsuario", "/autores/**").permitAll()
                         .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                         //asignar privilegio por roles
                         .requestMatchers("/users/**", "/admin/**").hasRole("ADMIN")

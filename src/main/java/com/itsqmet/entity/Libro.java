@@ -1,10 +1,7 @@
 package com.itsqmet.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "libros")
 public class Libro {
     //clave primaria @ID no hace falta el no acepta nulos
     @Id
@@ -23,10 +21,14 @@ public class Libro {
 
 
     @Size(min = 5, max = 30)
+    @Column(unique = true)
     private String titulo;
 
+    //validacion en el backend
     @NotNull
     @Pattern(regexp = "^(?=(?:[^0-9]*[0-9]){10}(?:(?:[^0-9]*[0-9]){3})?$)[\\d-]+$")
+    //reglaas de identidad de bases de dats
+    @Column(unique = true, nullable = false)
     private String isbn;
 
     @Size(min = 10, max = 50)

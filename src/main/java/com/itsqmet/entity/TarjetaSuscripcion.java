@@ -17,4 +17,8 @@ public class TarjetaSuscripcion {
     private Long id;
 
     private String tipo;
+
+
+    @OneToOne(mappedBy = "tarjetaSuscripcion")
+    private User user;
 }

@@ -88,6 +88,9 @@
                     <th scope="col" class="table-header-cell px-6 py-4 font-medium text-gray-700 uppercase tracking-wider">
                         Stock
                   </th>
+                    <td scope="col" class="table-header-cell px-6 py-4 font-medium text-gray-700 uppercase tracking-wider">
+                        Autor
+                    </td>
                     <th scope="col" class="table-header-cell px-6 py-4 font-medium text-gray-700 uppercase tracking-wider text-center">
                         Acciones
                     </th>
@@ -103,6 +106,9 @@
                     <td class="table-data-cell table-cell-desc px-6 py-4 text-gray-600 max-w-xs truncate" th:text="${libro.descripcion}"></td>
                     <!--stock-->
                     <td th:text="*{libro.stock}" class="table-data-cell table-cell-stock px-6 py-4">
+
+                    </td>
+                    <td th:text="*{libro.autor.nombre}" class="table-data-cell table-cell-stock px-6 py-4">
 
                     </td>
                     <!--acciones-->

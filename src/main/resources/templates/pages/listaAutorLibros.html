@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de autores</title>
+    <title>Lista libros autores</title>
     <!--FAVICON-->
     <link rel="icon" th:href="@{/images/libro.png}">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/panelAdmin.css}">
-    <link rel="stylesheet" th:href="@{/css/listaLi.css}">
+    <link rel="stylesheet" th:href="@{/css/liForm.css}">
 </head>
-<body>
+<body class="bg-gray-100">
 <nav class="navbar-main bg-orange-100 w-full border-b border-default">
     <div class="navbar-container max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a th:href="@{https://elibro.net/es/lc/itsqmet/inicio}" class="navbar-brand flex items-center space-x-3 rtl:space-x-reverse">
@@ -28,9 +28,6 @@
         <div class="navbar-menu hidden w-full md:block md:w-auto" id="navbar-default">
             <ul class="navbar-list font-medium flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base bg-neutral-secondary-soft md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-neutral-primary">
                 <li class="navbar-item">
-                    <a th:href="@{/autores/formAutor}" class="navbar-link block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Registrar autor</a>
-                </li>
-                <li class="navbar-item">
                     <a th:href="@{/libros/formLibro}" class="navbar-link block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Registro</a>
                 </li>
                 <li class="navbar-item">
@@ -38,6 +35,9 @@
                 </li>
                 <li class="navbar-item">
                     <a th:href="@{/users/formUsuario}" class="navbar-link block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Formulario de usuario</a>
+                </li>
+                <li class="navbar-item">
+                    <a th:href="@{/autores}" class="navbar-link block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Lista de autores</a>
                 </li>
                 <li class="navbar-item">
                     <form th:action="@{/logout}" method="post">
@@ -51,75 +51,35 @@
         </div>
     </div>
 </nav>
-<!--tabla-->
-<div class="table-books-container min-h-screen bg-white p-6">
-    <div class="table-books-wrapper w-full max-w-6xl mx-auto bg-white rounded-xl p-6">
-        <!--título-->
-        <div class="table-header mb-8 text-center">
-            <h1 class="table-title text-3xl font-bold mb-2">Gestión de autores</h1>
-            <p class="table-subtitle text-gray-600">Administra el catálogo de autores</p>
-        </div>
-
-        <!--tabla-->
-        <div class="table-scroll-container border border-gray-200 rounded-lg overflow-hidden">
-            <table class="books-table w-full text-sm text-left text-gray-800">
-                <thead class="table-head bg-gray-50">
-                <tr class="table-head-row border-b border-gray-200">
-                    <th scope="col" class="table-header-cell px-6 py-4 font-medium text-gray-700 uppercase tracking-wider">
-                        Id
-                    </th>
-                    <th scope="col" class="table-header-cell px-6 py-4 font-medium text-gray-700 uppercase tracking-wider">
-                        Nombre
-                    </th>
-                    <th scope="col" class="table-header-cell px-6 py-4 font-medium text-gray-700 uppercase tracking-wider text-center">
-                        Acciones
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="autor: ${autores}" class="table-row border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                    <td class="table-data-cell table-cell-title px-6 py-4 font-medium text-gray-900" th:text="${autor.id}"></td>
-                    <!--nombre-->
-                    <td class="table-data-cell table-cell-title px-6 py-4 font-medium text-gray-900" th:text="${autor.nombre}"></td>
-                    <!--acciones-->
-                    <td class="table-data-cell table-cell-actions px-6 py-4 space-x-2 text-center">
-                        <!--boton actualizar-->
-                        <!--sec:authorize="hasAnyRole('ADMIN','BIBLIOTECARIO')"-->
-                        <a th:href="@{/autores/editarAutor/} + ${autor.id}"
-                           class="action-btn action-btn-update bg-orange-100 text-orange-700 px-3 py-1 rounded-md hover:bg-orange-200 transition-colors border border-orange-200">
-                            Actualizar
-                        </a>
-                        <!--para eliminar-->
-                        <form th:action="@{/autores/eliminarAutor/} + ${autor.id}" method="post"  class="action-form inline">
-                            <!--este input delete-->
-                            <!--sec:authorize="hasRole('ADMIN')"-->
-                            <input type="hidden" name="_method" value="delete">
-                            <button type="submit"
-
-                                    onclick="return confirm('¿Estás seguro de que deseas eliminar este autor?')"
-                                    class="action-btn action-btn-delete bg-red-100 text-red-700 px-3 py-1 rounded-md hover:bg-red-200 transition-colors border border-red-200">
-                                Eliminar
-                            </button>
-                        </form>
-                    </td>
-                    <td class="table-data-cell table-cell-actions px-6 py-4 space-x-2 text-center">
-                        <a th:href="@{/autores/autor/} + ${autor.id}"  class="action-btn action-btn-update bg-orange-100 text-orange-700 px-3 py-1 rounded-md hover:bg-orange-200 transition-colors border border-orange-200">Libros</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <!--otros botones-->
-        <div class="action-buttons mt-8 pt-6 border-t border-gray-100 flex justify-center gap-4">
-            <a th:href="@{/autores/formAutor}"
-               class="primary-button bg-orange-500 text-white px-6 py-2 text-sm font-medium rounded-md hover:bg-orange-600 transition-colors">
-                Nuevo autor
-            </a>
-            <a th:href="@{/admin}"
-               class="secondary-button bg-blue-500 text-white px-6 py-2 text-sm font-medium rounded-md hover:bg-blue-600 transition-colors">
-                Volver al panel
-            </a>
-        </div>
+<div class="container mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+    <h2 class="text-3xl font-semibold text-gray-800 mb-4" th:text="${autor.nombre}">Autor</h2> <!-- Nombre del autor -->
+    <div class="mb-6">
+        <h3 class="text-xl font-medium text-gray-700 mb-2">Detalles del Autor:</h3>
+<!--        <p class="text-sm text-gray-600"><strong>Nacionalidad:</strong> <span th:text="${autor.nacionalidad}"></span></p>-->
+<!--        <p class="text-sm text-gray-600"><strong>Fecha de Nacimiento:</strong> <span th:text="${#dates.format(autor.fechaNacimiento, 'yyyy-MM-dd')}"></span></p>-->
+<!--        <p class="text-sm text-gray-600"><strong>Género:</strong> <span th:text="${autor.genero}"></span></p>-->
+    </div>
+    <div class="mb-6">
+        <h3 class="text-xl font-medium text-gray-700 mb-4">Libros de este autor:</h3>
+        <table class="min-w-full table-auto border-collapse">
+            <thead>
+            <tr class="bg-gray-100 text-left">
+                <th class="px-4 py-2 text-sm font-medium text-gray-600">Título</th>
+                <th class="px-4 py-2 text-sm font-medium text-gray-600">ISBN</th>
+                <th class="px-4 py-2 text-sm font-medium text-gray-600">Descripción</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="libro : ${autor.libros}" class="border-t">
+                <td class="px-4 py-2 text-sm text-gray-700" th:text="${libro.titulo}"></td>
+                <td class="px-4 py-2 text-sm text-gray-700" th:text="${libro.isbn}"></td>
+                <td class="px-4 py-2 text-sm text-gray-700" th:text="${libro.descripcion}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-6">
+        <a th:href="@{/autores}" class="px-6 py-2 text-white bg-gray-600 hover:bg-gray-700 rounded-lg transition duration-200 ease-in-out">Volver a la lista de autores</a>
     </div>
 </div>
 <!--footer-->

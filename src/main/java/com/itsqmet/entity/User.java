@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,4 +34,18 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Rol rol;
+
+    @OneToOne
+    @JoinColumn(name = "tajeta_suscripcion_id")
+    private TarjetaSuscripcion tarjetaSuscripcion;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Prestamo> prestamos;
+
+//    //relvcion varios a varios
+//    @ManyToMany
+//    @JoinTable(name = "prestamos", joinColumns = @JoinColumn(name = "id_usuario"), inverseJoinColumns = @JoinColumn(name = "id_libro"))
+//    private List<Libro> libros;
+
+
 }

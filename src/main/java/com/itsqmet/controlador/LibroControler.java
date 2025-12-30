@@ -1,6 +1,8 @@
 package com.itsqmet.controlador;
 
+import com.itsqmet.entity.Autor;
 import com.itsqmet.entity.Libro;
+import com.itsqmet.service.AutorService;
 import com.itsqmet.service.LibroService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class LibroControler {
 
     @Autowired
     private LibroService libroService;
+
+    @Autowired
+    private AutorService autorService;
 
     //controlador de libros METODO LEER
     @GetMapping
@@ -35,6 +40,9 @@ public class LibroControler {
    public String formularioLibro(Model model){
         Libro libro = new Libro();
         model.addAttribute("libro", libro);
+        //cargar datods del autor en el formulari
+        List<Autor> autores = autorService.mostarAutor();
+        model.addAttribute("autores", autores);
         return "pages/libroForm";
     }
     //2. enviar los datos
@@ -51,6 +59,9 @@ public class LibroControler {
     public String actualizarLibro(@PathVariable Long id, Model model){
         Optional<Libro> libro = libroService.buscarLibroById(id);
         model.addAttribute("libro", libro);
+        //cargar datods del autor en el formulario
+        List<Autor> autores = autorService.mostarAutor();
+        model.addAttribute("autores", autores);
         return "pages/libroForm";
     }
 

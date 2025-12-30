@@ -1,7 +1,9 @@
 package com.itsqmet.controlador;
 
 import com.itsqmet.entity.Autor;
+import com.itsqmet.entity.Libro;
 import com.itsqmet.service.AutorService;
+import com.itsqmet.service.LibroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,9 @@ public class AutorControler {
 
     @Autowired
     private AutorService autorService;
+
+    @Autowired
+    private LibroService libroService; //inyectar el servicio del libro
 
     //leer
     @GetMapping
@@ -53,5 +58,16 @@ public class AutorControler {
     public String eliminarAutor(@PathVariable Long id){
         autorService.eliminarAutor(id);
         return "redirect:/autores";
+    }
+
+    //metod para busacar los libros de un autor
+    @GetMapping("/autor/{id}")
+    public String obtenrLibrosPorAutor(@PathVariable Long id, Model model){
+        Optional<Libro> libros = libroService.buscarLibroById(id);
+        Autor autor = autorService.buscarAutorById(id)
+                .orElseThrow(()-> new RuntimeException("Autor no existe"));
+        model.addAttribute("libros", libros);
+        model.addAttribute("autor", autor);
+        return "pages/listaAutorLibros";
     }
 }

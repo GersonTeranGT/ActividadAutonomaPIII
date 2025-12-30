@@ -3,6 +3,7 @@ package com.itsqmet.service;
 import com.itsqmet.entity.Autor;
 import com.itsqmet.entity.Libro;
 import com.itsqmet.repository.AutorRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,4 +49,12 @@ public class AutorService {
                 .orElseThrow(()-> new RuntimeException("Autor no existe"));
         autorRepository.delete(autor);
     }
+
+    //metodo para obener autor con sus libros transaccion
+    @Transactional
+    public Autor obtenerAutorConLibros(Long id){
+        Autor autor = autorRepository.findById(id).orElseThrow();
+        return autor;
+    }
+
 }

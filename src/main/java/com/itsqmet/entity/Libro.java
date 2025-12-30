@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,6 +39,24 @@ public class Libro {
     @Min(value = 1)
     @Max(value = 400)
     private int stock;
+
+    //crear variable tipo autor- --- nuevo atributo
+    //propietaria de la realacion
+    @ManyToOne
+    @JoinColumn(name = "id_autor")  //columna en la base de dato
+    private Autor autor;    //atributo
+
+    @ManyToOne
+    @JoinColumn(name = "id_genero")
+    private Genero genero;
+
+    @OneToMany(mappedBy = "libro")
+    private List<Prestamo> prestamos;
+
+//    //relacion varios a varios
+//    @ManyToMany(mappedBy = "libros")
+//    private List<User> users;
+
 
 //    @AssertTrue
 //    private boolean condiciones;
